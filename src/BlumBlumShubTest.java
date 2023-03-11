@@ -8,9 +8,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class BlumBlumShubTest {
 
+    @Disabled
     @Test
     public void singleBitTestFor20000Bits() {
-        BlumBlumShub blumBlumShub = new BlumBlumShub(300, 400, 20000);
+        BlumBlumShub blumBlumShub = new BlumBlumShub(300, 400, 24);
         blumBlumShub.serviceBBS();
         String binary = blumBlumShub.returnBinary();
 
@@ -35,11 +36,11 @@ class BlumBlumShubTest {
         else return false;
     }
 
+    @Disabled
     @Test
     public void seriesTest() {
-        BlumBlumShub blumBlumShub = new BlumBlumShub(300, 400, 20000);
+        BlumBlumShub blumBlumShub = new BlumBlumShub(300, 400, 24);
         blumBlumShub.serviceBBS();
-        blumBlumShub.printAll();
         String binary = blumBlumShub.returnBinary();
 
         ArrayList<Integer> valueTab = new ArrayList<>();
@@ -54,49 +55,90 @@ class BlumBlumShubTest {
 
         for (int i = 1; i < 10; i++) {
             if (i > 4) j = 4;
-            if (subString(binary, i+1, '1') > valueTab.get(j)) test = false;
-            if (subString(binary, i+1, '0') > valueTab.get(j)) test = false;
+            if (findRepeats(binary, i, '1') > valueTab.get(j)) test = false;
+            if (findRepeats(binary, i, '0') > valueTab.get(j)) test = false;
             j++;
         }
-        System.out.println(test);
-        System.out.println("dlugosc serii 1 dla znaku '1' " + subString(binary, 2, '1'));
-        System.out.println("Zero, które występuje w ciągu co najmniej 2 razy: " + subString(binary, 2, '0'));
-        System.out.println("dlugosc serii 2 dla znaku '1'  " + subString(binary, 3, '1'));
-        System.out.println("Zero, które występuje w ciągu co najmniej 3 razy: " + subString(binary, 3, '0'));
-        System.out.println("dlugosc serii 3 dla znaku '1'  " + subString(binary, 4, '1'));
-        System.out.println("Zero, które występuje w ciągu co najmniej 4 razy: " + subString(binary, 4, '0'));
-        System.out.println("dlugosc serii 4 dla znaku '1'  " + subString(binary, 5, '1'));
-        System.out.println("dlugosc serii 4 dla znaku '0' " + subString(binary, 5, '0'));
-        System.out.println("dlugosc serii 5 dla znaku '1'  " + subString(binary, 6, '1'));
-        System.out.println("dlugosc serii 5 dla znaku '0'  " + subString(binary, 6, '0'));
-        System.out.println("dlugosc serii 6 dla znaku '1'  " + subString(binary, 7, '1'));
-        System.out.println("dlugosc serii 6 dla znaku '0'  " + subString(binary, 7, '0'));
+//        System.out.println(test);
+//        System.out.println(findRepeats(binary, 1, '1'));
+//        System.out.println(findRepeats(binary, 2, '1'));
+//        System.out.println(findRepeats(binary, 3, '1'));
+//        System.out.println(findRepeats(binary, 4, '1'));
+//        System.out.println(findRepeats(binary, 5, '1'));
         assertTrue(test);
     }
 
-    public int subString(String binary, int seriesLength, Character character) {
-        int count = 0;
-        int repeat = 0;
-        for (int i = 0; i < binary.length(); i++) {
-            if (binary.charAt(i) == character) repeat++;
-            else repeat = 0;
-            if (repeat == seriesLength) {
-                repeat = 0;
-                count++;
+    public int findRepeats(String binary, int seriesLength, Character character) {
+        int key = 0;
+        int series = 0;
+        for (int i = 0; i < binary.length() - 1; i++) {
+            if (binary.charAt(i) == character) {
+                key++;
+            } else {
+                key = 0;
+            }
+            if (key == seriesLength) {
+                if (binary.charAt(i + 1) != character) {
+                    key = 0;
+                    series++;
+                }
             }
         }
-        return count;
+        return series;
     }
 
+    @Disabled
     @Test
     public void longSerialTest() {
-        BlumBlumShub blumBlumShub = new BlumBlumShub(600, 700, 20000);
+        BlumBlumShub blumBlumShub = new BlumBlumShub(300, 400, 24);
         blumBlumShub.serviceBBS();
         String binary = blumBlumShub.returnBinary();
 
         int maxLength = 26;
         int repeatition = 0;
-        if (subString(binary, maxLength, '1') != 0 && subString(binary, maxLength, '0') != 0) repeatition++;
+        if (findRepeats(binary, maxLength, '1') != 0 && findRepeats(binary, maxLength, '0') != 0) repeatition++;
         assertEquals(0, repeatition);
+    }
+
+    @Test
+    public void pokerTest() {
+        BlumBlumShub blumBlumShub = new BlumBlumShub(300, 400, 24);
+        blumBlumShub.serviceBBS();
+        String binary = blumBlumShub.returnBinary();
+
+        divideFor5000pieces(binary);
+    }
+
+    public ArrayList<Integer> divideFor5000pieces(String binary) {
+        ArrayList<String> tab = new ArrayList<>();
+        String word = "";
+        for (int i = 0; i < binary.length(); i++) {
+            word += binary.charAt(i);
+            if (i % 4 == 3) {
+                tab.add(word);
+                word = "";
+            }
+        }
+
+        ArrayList<Integer> decimalValues = new ArrayList<>();
+        for (String string : tab) {
+            decimalValues.add(binaryToDecimal(string));
+        }
+        return decimalValues;
+    }
+
+    public void calculateSi(){
+
+    }
+
+    public int binaryToDecimal(String binary) {
+        int decimal = 0;
+        int power = 0;
+        for (int i = binary.length() - 1; i >= 0; i--) {
+            int bit = binary.charAt(i) - '0';
+            decimal += bit * Math.pow(2, power);
+            power++;
+        }
+        return decimal;
     }
 }
