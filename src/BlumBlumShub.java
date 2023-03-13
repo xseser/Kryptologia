@@ -11,6 +11,9 @@ public class BlumBlumShub {
         this.minValue = minValue;
         this.maxValue = maxValue;
         this.numOfBits = numOfBits;
+        findValueOfX();
+        arrayToStringParser();
+        binaryToDecimal();
     }
 
     public int generateValue() {
@@ -91,9 +94,9 @@ public class BlumBlumShub {
     }
 
     public void serviceBBS(){
-        findValueOfX();
-        arrayToStringParser();
-        binaryToDecimal();
+//        findValueOfX();
+//        arrayToStringParser();
+//        binaryToDecimal();
     }
 
     public void printAll() {
@@ -105,5 +108,10 @@ public class BlumBlumShub {
         System.out.println("maxValue = " + maxValue);   // user gives that
         System.out.println("binary = " + binary);
         System.out.println("decimal = " + decimal);
+    }
+
+    public void testFunction(){
+        BlumBlumShubTest blumBlumShubTest = new BlumBlumShubTest();
+
     }
 }

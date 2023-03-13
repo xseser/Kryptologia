@@ -7,12 +7,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 class BlumBlumShubTest {
-
-    @Disabled
     @Test
     public void singleBitTestFor20000Bits() {
-        BlumBlumShub blumBlumShub = new BlumBlumShub(300, 400, 24);
-        blumBlumShub.serviceBBS();
+        BlumBlumShub blumBlumShub = new BlumBlumShub(300, 400, 20000);
         String binary = blumBlumShub.returnBinary();
 
         int minValue = 9725; //value from pdf for 20.000 bits
@@ -25,9 +22,8 @@ class BlumBlumShubTest {
             if (binary.charAt(i) == '1') digit1++;
             else digit0++;
         }
-        if (checkCompartments(minValue, maxValue, digit0) && checkCompartments(minValue, maxValue, digit1)) {
-            test = true;
-        }
+        if (checkCompartments(minValue, maxValue, digit0) && checkCompartments(minValue, maxValue, digit1)) test = true;
+        else System.out.println("Number of digit 1: " + digit1);
         assertTrue(test);
     }
 
@@ -36,11 +32,9 @@ class BlumBlumShubTest {
         else return false;
     }
 
-    @Disabled
     @Test
     public void seriesTest() {
-        BlumBlumShub blumBlumShub = new BlumBlumShub(300, 400, 24);
-        blumBlumShub.serviceBBS();
+        BlumBlumShub blumBlumShub = new BlumBlumShub(300, 400, 20000);
         String binary = blumBlumShub.returnBinary();
 
         ArrayList<Integer> valueTab = new ArrayList<>();
@@ -53,18 +47,12 @@ class BlumBlumShubTest {
         boolean test = true;
         int j = 0;
 
-        for (int i = 1; i < 10; i++) {
+        for (int i = 1; i < binary.length(); i++) {
             if (i > 4) j = 4;
             if (findRepeats(binary, i, '1') > valueTab.get(j)) test = false;
             if (findRepeats(binary, i, '0') > valueTab.get(j)) test = false;
             j++;
         }
-//        System.out.println(test);
-//        System.out.println(findRepeats(binary, 1, '1'));
-//        System.out.println(findRepeats(binary, 2, '1'));
-//        System.out.println(findRepeats(binary, 3, '1'));
-//        System.out.println(findRepeats(binary, 4, '1'));
-//        System.out.println(findRepeats(binary, 5, '1'));
         assertTrue(test);
     }
 
@@ -87,26 +75,44 @@ class BlumBlumShubTest {
         return series;
     }
 
-    @Disabled
     @Test
     public void longSerialTest() {
-        BlumBlumShub blumBlumShub = new BlumBlumShub(300, 400, 24);
-        blumBlumShub.serviceBBS();
+        BlumBlumShub blumBlumShub = new BlumBlumShub(300, 400, 20000);
         String binary = blumBlumShub.returnBinary();
 
         int maxLength = 26;
         int repeatition = 0;
         if (findRepeats(binary, maxLength, '1') != 0 && findRepeats(binary, maxLength, '0') != 0) repeatition++;
+        if(repeatition > 0) System.out.println("long serial Test repetitions = " + repeatition);
         assertEquals(0, repeatition);
     }
 
     @Test
     public void pokerTest() {
-        BlumBlumShub blumBlumShub = new BlumBlumShub(300, 400, 24);
-        blumBlumShub.serviceBBS();
+        BlumBlumShub blumBlumShub = new BlumBlumShub(300, 400, 20000);
         String binary = blumBlumShub.returnBinary();
 
-        divideFor5000pieces(binary);
+//        calculateSi(binary, 4);
+
+        double minValue = 2.16;
+        double maxValue = 46.17;
+        double x = 0;
+        double sum = 0;
+        boolean test = true;
+
+        for (int i = 0; i < 16; i++) {
+            sum += Math.pow(calculateSi(binary, i), 2);
+//            System.out.println(Math.pow(calculateSi(binary, i), 2));
+        }
+
+        x = 0.0032 * sum - 5000;
+
+        if (Double.compare(maxValue, x) < 0) test = false;
+        if (Double.compare(x, minValue) < 0) test = false;
+
+        if(!test) System.out.println(" poker test, x = " + x);
+        assertTrue(test);
+
     }
 
     public ArrayList<Integer> divideFor5000pieces(String binary) {
@@ -124,11 +130,23 @@ class BlumBlumShubTest {
         for (String string : tab) {
             decimalValues.add(binaryToDecimal(string));
         }
+
+//        for(Integer integer : decimalValues){
+//            System.out.println(integer);
+//        }
         return decimalValues;
     }
 
-    public void calculateSi(){
-
+    public Integer calculateSi(String binary, int i) {
+        int count = 0;
+        ArrayList<Integer> decimalValues = divideFor5000pieces(binary);
+        for (int j = 0; j < decimalValues.size(); j++) {
+            if (decimalValues.get(j) == i) {
+                count++;
+            }
+        }
+//        System.out.println("\n" +  count);
+        return count;
     }
 
     public int binaryToDecimal(String binary) {
