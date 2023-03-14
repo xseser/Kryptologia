@@ -9,11 +9,11 @@ import static org.junit.jupiter.api.Assertions.*;
 class BlumBlumShubTest {
     @Test
     public void singleBitTestFor20000Bits() {
-        BlumBlumShub blumBlumShub = new BlumBlumShub(300, 400, 20000);
+        BlumBlumShub blumBlumShub = new BlumBlumShub(169999, 371111, 20000);
         String binary = blumBlumShub.returnBinary();
 
-        int minValue = 9725; //value from pdf for 20.000 bits
-        int maxValue = 10275; //value from pdf for 20.000 bits
+        int minValue = 9654; //value from pdf for 20.000 bits
+        int maxValue = 10346; //value from pdf for 20.000 bits
         boolean test = false;
 
         int digit0 = 0;
@@ -34,15 +34,15 @@ class BlumBlumShubTest {
 
     @Test
     public void seriesTest() {
-        BlumBlumShub blumBlumShub = new BlumBlumShub(300, 400, 20000);
+        BlumBlumShub blumBlumShub = new BlumBlumShub(169999, 371111, 20000);
         String binary = blumBlumShub.returnBinary();
 
         ArrayList<Integer> valueTab = new ArrayList<>();
-        valueTab.add(2685);
-        valueTab.add(1386);
-        valueTab.add(723);
-        valueTab.add(384);
-        valueTab.add(209);
+        valueTab.add(2733);
+        valueTab.add(1421);
+        valueTab.add(748);
+        valueTab.add(402);
+        valueTab.add(223);
 
         boolean test = true;
         int j = 0;
@@ -77,7 +77,7 @@ class BlumBlumShubTest {
 
     @Test
     public void longSerialTest() {
-        BlumBlumShub blumBlumShub = new BlumBlumShub(300, 400, 20000);
+        BlumBlumShub blumBlumShub = new BlumBlumShub(169999, 371111, 20000);
         String binary = blumBlumShub.returnBinary();
 
         int maxLength = 26;
@@ -89,13 +89,13 @@ class BlumBlumShubTest {
 
     @Test
     public void pokerTest() {
-        BlumBlumShub blumBlumShub = new BlumBlumShub(300, 400, 20000);
+        BlumBlumShub blumBlumShub = new BlumBlumShub(169999, 371111, 20000);
         String binary = blumBlumShub.returnBinary();
 
 //        calculateSi(binary, 4);
 
-        double minValue = 2.16;
-        double maxValue = 46.17;
+        double minValue = 2.19;
+        double maxValue = 74.17;
         double x = 0;
         double sum = 0;
         boolean test = true;
