@@ -1,6 +1,7 @@
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
+package test;
 
+import org.junit.jupiter.api.Test;
+import lab2.BlumBlumShub;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -9,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class BlumBlumShubTest {
     @Test
     public void singleBitTestFor20000Bits() {
-        BlumBlumShub blumBlumShub = new BlumBlumShub(169999, 371111, 20000);
+        BlumBlumShub blumBlumShub = new BlumBlumShub(169999, 971111, 20000);
         String binary = blumBlumShub.returnBinary();
 
         int minValue = 9654; //value from pdf for 20.000 bits
@@ -34,7 +35,7 @@ class BlumBlumShubTest {
 
     @Test
     public void seriesTest() {
-        BlumBlumShub blumBlumShub = new BlumBlumShub(169999, 371111, 20000);
+        BlumBlumShub blumBlumShub = new BlumBlumShub(169999, 971111, 20000);
         String binary = blumBlumShub.returnBinary();
 
         ArrayList<Integer> valueTab = new ArrayList<>();
@@ -77,7 +78,7 @@ class BlumBlumShubTest {
 
     @Test
     public void longSerialTest() {
-        BlumBlumShub blumBlumShub = new BlumBlumShub(169999, 371111, 20000);
+        BlumBlumShub blumBlumShub = new BlumBlumShub(169999, 971111, 20000);
         String binary = blumBlumShub.returnBinary();
 
         int maxLength = 26;
@@ -89,13 +90,13 @@ class BlumBlumShubTest {
 
     @Test
     public void pokerTest() {
-        BlumBlumShub blumBlumShub = new BlumBlumShub(169999, 371111, 20000);
+        BlumBlumShub blumBlumShub = new BlumBlumShub(169999, 971111, 20000);
         String binary = blumBlumShub.returnBinary();
 
 //        calculateSi(binary, 4);
 
         double minValue = 2.19;
-        double maxValue = 74.17;
+        double maxValue = 46.12;
         double x = 0;
         double sum = 0;
         boolean test = true;

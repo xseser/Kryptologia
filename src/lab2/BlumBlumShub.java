@@ -1,3 +1,5 @@
+package lab2;
+
 import java.util.ArrayList;
 
 import static java.lang.Math.pow;
