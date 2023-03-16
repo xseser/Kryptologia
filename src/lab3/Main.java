@@ -9,11 +9,4 @@ public class Main {
         System.out.println(rsa.encryptMessage(rsa.arrayToCharParser("kryptografia")));
         System.out.println(rsa.decryptMessage(rsa.encryptMessage(rsa.arrayToCharParser("kryptografia"))));
     }
-
-
-
-
-
-
-
 }
