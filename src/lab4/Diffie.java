@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Diffie {
-    long n, g;
+    long n, g, random;
 
     public Diffie(long n, long g) {
         this.n = n;
@@ -98,8 +98,20 @@ public class Diffie {
     }
 
     public long privateKey(long min, long max){
-        long random = (long) (Math.random()*(max-min)+min);
+        random = generateBigNumber(min, max);
         return powMod(g, random, n);
+    }
+
+    public long returnRandom(){
+        return random;
+    }
+
+    public long generateBigNumber(long min, long max){
+        return (long) (Math.random()*(max-min)+min);
+    }
+
+    public Long calculateSessionKey(long a, long b){
+        return powMod(a, b, n);
     }
 
 
